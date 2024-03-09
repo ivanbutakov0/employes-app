@@ -19,6 +19,8 @@ const currentUser = async (req, res) => {
 	})
 }
 
-module.exports.loginUser = loginUser
-module.exports.registerUser = registerUser
-module.exports.currentUser = currentUser
+module.exports = {
+	loginUser,
+	registerUser,
+	currentUser,
+}
