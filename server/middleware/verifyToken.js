@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
 				success: false,
 			})
 		}
-		req.user = user
+		req.userId = user.id
 		next()
 	})
 }
