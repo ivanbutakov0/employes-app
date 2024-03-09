@@ -1,4 +1,5 @@
 const { prisma } = require('../prisma/prisma-client')
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 /**
@@ -18,7 +19,11 @@ const loginUser = async (req, res) => {
 			})
 		}
 
-		const user = await prisma.user.findOne({ email })
+		const user = await prisma.user.findUnique({
+			where: {
+				email,
+			},
+		})
 		if (!user) {
 			return res.status(400).json({
 				success: false,
@@ -40,6 +45,7 @@ const loginUser = async (req, res) => {
 		})
 		res.status(200).json({
 			success: true,
+			data: user,
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -56,10 +62,52 @@ const loginUser = async (req, res) => {
  *	@access Public
  */
 const registerUser = async (req, res) => {
-	res.status(200).json({
-		success: true,
-		data: 'Register User',
-	})
+	try {
+		const { name, email, password } = req.body
+
+		if (!name || !email || !password) {
+			return res.status(400).json({
+				success: false,
+				message: 'Please provide name, email and password',
+			})
+		}
+
+		const candidate = await prisma.user.findUnique({
+			where: {
+				email,
+			},
+		})
+		if (candidate) {
+			return res.status(400).json({
+				success: false,
+				message: 'User already exists',
+			})
+		}
+
+		const hashedPassword = await bcrypt.hash(password, 7)
+		const newUser = await prisma.user.create({
+			data: {
+				name,
+				email,
+				password: hashedPassword,
+			},
+		})
+
+		const token = jwt.sign({ id: newUser }, process.env.JWT_SECRET)
+		res.cookie('access_token', token, {
+			httpOnly: true,
+		})
+		res.send({
+			success: true,
+			data: newUser,
+		})
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			message: 'Something went wrong',
+			error: err.message,
+		})
+	}
 }
 
 const currentUser = async (req, res) => {
