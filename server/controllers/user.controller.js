@@ -40,12 +40,13 @@ const loginUser = async (req, res) => {
 		}
 
 		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
+		const { password: pass, ...restData } = user
 		res.cookie('access_token', token, {
 			httpOnly: true,
 		})
 		res.status(200).json({
 			success: true,
-			data: user,
+			data: restData,
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -94,12 +95,13 @@ const registerUser = async (req, res) => {
 		})
 
 		const token = jwt.sign({ id: newUser }, process.env.JWT_SECRET)
+		const { password: pass, ...restData } = newUser
 		res.cookie('access_token', token, {
 			httpOnly: true,
 		})
 		res.send({
 			success: true,
-			data: newUser,
+			data: restData,
 		})
 	} catch (err) {
 		res.status(500).json({
