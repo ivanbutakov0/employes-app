@@ -92,7 +92,7 @@ const createEmployee = async (req, res) => {
 
 /**
  * @route DELETE /api/employee/remove/:id
- * @desc Create employee
+ * @desc Remove employee
  * @access Private
  */
 const removeEmployee = async (req, res) => {
@@ -139,7 +139,53 @@ const removeEmployee = async (req, res) => {
 	}
 }
 
-const editEmployee = async (req, res) => {}
+/**
+ * @route PUT /api/employee/edit/:id
+ * @desc Edit employee
+ * @access Private
+ */
+const editEmployee = async (req, res) => {
+	const data = req.body
+	const id = req.params.id
+	const userId = req.userId
+
+	try {
+		const employee = await prisma.employee.findUnique({
+			where: {
+				id,
+			},
+		})
+		if (!employee) {
+			return res.status(404).json({
+				success: false,
+				message: 'Employee not found',
+			})
+		}
+		if (employee.userId !== userId) {
+			return res.status(401).json({
+				success: false,
+				message: 'You can only edit your own employee',
+			})
+		}
+		const updatedEmployee = await prisma.employee.update({
+			where: {
+				id,
+			},
+			data,
+		})
+
+		res.status(200).json({
+			success: true,
+			data: updatedEmployee,
+		})
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			message: 'Something went wrong',
+			error: err.message,
+		})
+	}
+}
 
 module.exports = {
 	getAllEmployees,
