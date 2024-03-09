@@ -1,7 +1,7 @@
 const { prisma } = require('../prisma/prisma-client.js')
 
 /**
- * @route GET /api/employees
+ * @route GET /api/employee
  * @desc Get all employees
  * @access Private
  */
@@ -13,16 +13,18 @@ const getAllEmployees = async (req, res) => {
 			data: employees,
 		})
 	} catch (err) {
-		res
-			.status(500)
-			.json({
-				success: false,
-				message: 'Something went wrong',
-				error: err.message,
-			})
+		res.status(500).json({
+			success: false,
+			message: 'Something went wrong',
+			error: err.message,
+		})
 	}
 }
-
+/**
+ * @route GET /api/employee/:id
+ * @desc Get employee by id
+ * @access Private
+ */
 const getEmployeeById = async (req, res) => {
 	try {
 		const { id } = req.params
@@ -41,17 +43,52 @@ const getEmployeeById = async (req, res) => {
 			data: employee,
 		})
 	} catch (err) {
-		res
-			.status(500)
-			.json({
-				success: false,
-				message: 'Something went wrong',
-				error: err.message,
-			})
+		res.status(500).json({
+			success: false,
+			message: 'Something went wrong',
+			error: err.message,
+		})
 	}
 }
 
-const createEmployee = async (req, res) => {}
+/**
+ * @route POST /api/employee/create
+ * @desc Create employee
+ * @access Private
+ */
+const createEmployee = async (req, res) => {
+	try {
+		const { firstName, lastName, age, address } = req.body
+
+		if (!firstName || !lastName || !age || !address) {
+			return res.status(400).json({
+				success: false,
+				message: 'Please provide firstName, lastName, age and address',
+			})
+		}
+
+		const newEmployee = await prisma.employee.create({
+			data: {
+				firstName,
+				lastName,
+				age,
+				address,
+				userId: req.userId,
+			},
+		})
+
+		res.status(200).json({
+			success: true,
+			data: newEmployee,
+		})
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			message: 'Something went wrong',
+			error: err.message,
+		})
+	}
+}
 
 const deleteEmployee = async (req, res) => {}
 
