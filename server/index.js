@@ -1,6 +1,7 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const userRouter = require('./routes/user.route')
+const employeesRouter = require('./routes/employees.route')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 3000
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/user', userRouter)
+app.use('/api/employees', employeesRouter)
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port http://localhost:${PORT}`)

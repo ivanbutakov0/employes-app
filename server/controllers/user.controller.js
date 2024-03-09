@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt')
  *	@desc Login User
  *	@access Public
  */
-
 const loginUser = async (req, res) => {
 	try {
 		const { email, password } = req.body
