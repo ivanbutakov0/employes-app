@@ -15,11 +15,41 @@ const getAllEmployees = async (req, res) => {
 	} catch (err) {
 		res
 			.status(500)
-			.json({ success: false, message: 'Something went wrong', data: err })
+			.json({
+				success: false,
+				message: 'Something went wrong',
+				error: err.message,
+			})
 	}
 }
 
-const getEmployeeById = async (req, res) => {}
+const getEmployeeById = async (req, res) => {
+	try {
+		const { id } = req.params
+		const employee = await prisma.employee.findUnique({
+			where: {
+				id,
+			},
+		})
+		if (!employee) {
+			return res
+				.status(404)
+				.json({ success: false, message: 'Employee not found' })
+		}
+		res.status(200).json({
+			success: true,
+			data: employee,
+		})
+	} catch (err) {
+		res
+			.status(500)
+			.json({
+				success: false,
+				message: 'Something went wrong',
+				error: err.message,
+			})
+	}
+}
 
 const createEmployee = async (req, res) => {}
 
