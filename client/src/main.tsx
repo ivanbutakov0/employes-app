@@ -2,22 +2,30 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Layout from './components/layout/index.tsx'
 import './index.css'
-import Paths from './paths.ts'
+import Login from './pages/login/index.tsx'
+import Register from './pages/register/index.tsx'
 import { store } from './redux/store'
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <h1>Hello world</h1>,
-	},
-	{
-		path: Paths.login,
-		element: <h1>Login</h1>,
-	},
-	{
-		path: Paths.register,
-		element: <h1>Register</h1>,
+		element: <Layout />,
+		children: [
+			{
+				path: '/',
+				element: 'Home',
+			},
+			{
+				path: '/login',
+				element: <Login />,
+			},
+			{
+				path: '/login',
+				element: <Register />,
+			},
+		],
 	},
 ])
 
