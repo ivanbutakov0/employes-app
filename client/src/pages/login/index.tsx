@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
+import Button from '../../components/button'
 import Input from '../../components/input'
 import styles from './index.module.css'
 
@@ -33,7 +35,7 @@ const Login = () => {
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 			<h1 className={styles.title}>Войдите</h1>
-			<div className={styles.inputs}>
+			<div className={styles.content}>
 				<Input
 					id='email'
 					type='email'
@@ -48,11 +50,17 @@ const Login = () => {
 					{...register('email')}
 				/>
 				{errors.password && <p className='error'>{errors.password.message}</p>}
-			</div>
 
-			<button disabled={isSubmitting} type='submit'>
-				{isSubmitting ? 'Submitting...' : 'Submit'}
-			</button>
+				<Button disabled={isSubmitting}>
+					{isSubmitting ? 'Загрузка...' : 'Вход'}
+				</Button>
+				<p className={styles.text}>
+					Нет аккаунта?{' '}
+					<Link to='/register' className={styles.link}>
+						Зарегистрироваться
+					</Link>
+				</p>
+			</div>
 		</form>
 	)
 }
