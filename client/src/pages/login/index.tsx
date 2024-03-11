@@ -22,6 +22,7 @@ const Login = () => {
 	const {
 		register,
 		handleSubmit,
+		setError,
 		formState: { errors, isSubmitting },
 	} = useForm<LoginFormData>({
 		resolver: zodResolver(loginSchema),
@@ -41,7 +42,7 @@ const Login = () => {
 						id='email'
 						type='email'
 						placeholder='Email'
-						{...register('email')}
+						register={register('email')}
 					/>
 					{errors.email && (
 						<p className={styles.error}>{errors.email.message}</p>
@@ -52,7 +53,7 @@ const Login = () => {
 						id='password'
 						type='password'
 						placeholder='Пароль'
-						{...register('password')}
+						register={register('password')}
 					/>
 					{errors.password && (
 						<p className={styles.error}>{errors.password.message}</p>

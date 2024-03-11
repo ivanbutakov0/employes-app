@@ -5,6 +5,7 @@ type InputProps = {
 	id?: string
 	type: 'text' | 'email' | 'password'
 	placeholder: string
+	register?: any
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
@@ -15,6 +16,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 			className={styles.input}
 			type={props.type}
 			placeholder={props.placeholder}
+			{...props.register}
 		/>
 	)
 })
