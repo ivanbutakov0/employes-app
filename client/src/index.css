@@ -15,12 +15,12 @@ body > div {
 body {
 	font-family: 'Roboto', sans-serif;
 	background-color: #141414;
-	color: white;
+	color: #ccc;
 }
 
 a {
 	text-decoration: none;
-	color: white;
+	color: #ccc;
 }
 
 ul {
