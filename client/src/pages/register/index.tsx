@@ -8,6 +8,7 @@ import styles from './index.module.css'
 
 const registerSchema = z
 	.object({
+		name: z.string().min(1, { message: 'Имя' }),
 		email: z
 			.string()
 			.email({ message: 'Пожалуйста, введите корректный email' })
@@ -40,14 +41,23 @@ const Register = () => {
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-			<h1 className={styles.title}>Войдите</h1>
+			<h1 className={styles.title}>Зарегистрируйтесь</h1>
 			<div className={styles.content}>
+				<div>
+					<Input
+						id='name'
+						type='text'
+						placeholder='Имя'
+						register={register('name')}
+					/>
+					{errors.name && <p className={styles.error}>{errors.name.message}</p>}
+				</div>
 				<div>
 					<Input
 						id='email'
 						type='email'
 						placeholder='Email'
-						{...register('email')}
+						register={register('email')}
 					/>
 
 					{errors.email && (
@@ -59,7 +69,7 @@ const Register = () => {
 						id='password'
 						type='password'
 						placeholder='Пароль'
-						{...register('password')}
+						register={register('password')}
 					/>
 					{errors.password && (
 						<p className={styles.error}>{errors.password.message}</p>
@@ -70,7 +80,7 @@ const Register = () => {
 						id='confirmPassword'
 						type='password'
 						placeholder='Подтвердите пароль'
-						{...register('confirmPassword')}
+						register={register('confirmPassword')}
 					/>
 					{errors.confirmPassword && (
 						<p className={styles.error}>{errors.confirmPassword.message}</p>
@@ -78,12 +88,12 @@ const Register = () => {
 				</div>
 
 				<Button disabled={isSubmitting}>
-					{isSubmitting ? 'Вход...' : 'Войти'}
+					{isSubmitting ? 'Регистрируем...' : 'Зарегистрироваться'}
 				</Button>
 				<p className={styles.text}>
-					Нет аккаунта?{' '}
-					<Link to='/register' className={styles.link}>
-						Зарегистрироваться
+					Уже есть аккаунт?{' '}
+					<Link to='/login' className={styles.link}>
+						Войти
 					</Link>
 				</p>
 			</div>
