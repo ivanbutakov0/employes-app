@@ -1,4 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { EyeOff } from 'lucide-react'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
@@ -26,6 +28,7 @@ const registerSchema = z
 type RegisterFormData = z.infer<typeof registerSchema>
 
 const Register = () => {
+	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 	const {
 		register,
 		handleSubmit,
@@ -64,24 +67,38 @@ const Register = () => {
 						<p className={styles.error}>{errors.email.message}</p>
 					)}
 				</div>
-				<div>
+				<div className={styles.input}>
 					<Input
 						id='password'
-						type='password'
+						type={isPasswordVisible ? 'text' : 'password'}
 						placeholder='Пароль'
 						register={register('password')}
 					/>
+					<button
+						type='button'
+						className={styles.pasVisible}
+						onClick={() => setIsPasswordVisible(prev => !prev)}
+					>
+						<EyeOff stroke='#ccc' size={20} />
+					</button>
 					{errors.password && (
 						<p className={styles.error}>{errors.password.message}</p>
 					)}
 				</div>
-				<div>
+				<div className={styles.input}>
 					<Input
 						id='confirmPassword'
-						type='password'
+						type={isPasswordVisible ? 'text' : 'password'}
 						placeholder='Подтвердите пароль'
 						register={register('confirmPassword')}
 					/>
+					<button
+						type='button'
+						className={styles.pasVisible}
+						onClick={() => setIsPasswordVisible(prev => !prev)}
+					>
+						<EyeOff stroke='#ccc' size={20} />
+					</button>
 					{errors.confirmPassword && (
 						<p className={styles.error}>{errors.confirmPassword.message}</p>
 					)}
