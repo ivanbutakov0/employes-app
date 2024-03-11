@@ -9,7 +9,7 @@ import styles from './index.module.css'
 const loginSchema = z.object({
 	email: z
 		.string()
-		.email({ message: 'Неверный формат' })
+		.email({ message: 'Пожалуйста, введите корректный email' })
 		.min(1, { message: 'Email обязателен' }),
 	password: z
 		.string()
@@ -36,23 +36,31 @@ const Login = () => {
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 			<h1 className={styles.title}>Войдите</h1>
 			<div className={styles.content}>
-				<Input
-					id='email'
-					type='email'
-					placeholder='Email'
-					{...register('email')}
-				/>
-				{errors.email && <p className='error'>{errors.email.message}</p>}
-				<Input
-					id='password'
-					type='password'
-					placeholder='Email'
-					{...register('email')}
-				/>
-				{errors.password && <p className='error'>{errors.password.message}</p>}
+				<div>
+					<Input
+						id='email'
+						type='email'
+						placeholder='Email'
+						{...register('email')}
+					/>
+					{errors.email && (
+						<p className={styles.error}>{errors.email.message}</p>
+					)}
+				</div>
+				<div>
+					<Input
+						id='password'
+						type='password'
+						placeholder='Пароль'
+						{...register('password')}
+					/>
+					{errors.password && (
+						<p className={styles.error}>{errors.password.message}</p>
+					)}
+				</div>
 
 				<Button disabled={isSubmitting}>
-					{isSubmitting ? 'Загрузка...' : 'Вход'}
+					{isSubmitting ? 'Вход...' : 'Войти'}
 				</Button>
 				<p className={styles.text}>
 					Нет аккаунта?{' '}

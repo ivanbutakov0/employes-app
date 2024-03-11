@@ -3,10 +3,11 @@
 	border: 1px solid #374151;
 	border-radius: 5px;
 	max-width: 400px;
+	padding: 5px;
 }
 
 .form > * {
-	margin-bottom: 15px;
+	margin-bottom: 25px;
 }
 
 .title {
@@ -21,7 +22,7 @@
 }
 
 .content > * {
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 }
 
 .text {
@@ -33,4 +34,10 @@
 
 .link:hover {
 	text-decoration: underline;
+}
+
+.error {
+	margin-top: 5px;
+	font-size: 12px;
+	color: #ef4444;
 }

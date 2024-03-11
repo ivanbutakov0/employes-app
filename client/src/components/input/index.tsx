@@ -9,15 +9,13 @@ type InputProps = {
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 	return (
-		<div>
-			<input
-				ref={ref}
-				id={props.id}
-				className={styles.input}
-				type={props.type}
-				placeholder={props.placeholder}
-			/>
-		</div>
+		<input
+			ref={ref}
+			id={props.id}
+			className={styles.input}
+			type={props.type}
+			placeholder={props.placeholder}
+		/>
 	)
 })
 
