@@ -39,13 +39,18 @@ const loginUser = async (req, res) => {
 		}
 
 		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
-		const { password: pass, ...restData } = user
-		res.cookie('access_token', token, {
-			httpOnly: true,
-		})
+		const responseUserData = {
+			id: user.id,
+			name: user.name,
+			email: user.email,
+			createdAt: user.createdAt,
+			updatedAt: user.updatedAt,
+			token: token,
+		}
+
 		res.status(200).json({
 			success: true,
-			data: restData,
+			data: responseUserData,
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -94,13 +99,17 @@ const registerUser = async (req, res) => {
 		})
 
 		const token = jwt.sign({ id: newUser }, process.env.JWT_SECRET)
-		const { password: pass, ...restData } = newUser
-		res.cookie('access_token', token, {
-			httpOnly: true,
-		})
+		const responseUserData = {
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			createdAt: newUser.createdAt,
+			updatedAt: newUser.updatedAt,
+			token: token,
+		}
 		res.send({
 			success: true,
-			data: restData,
+			data: responseUserData,
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -132,10 +141,16 @@ const getCurrentUser = async (req, res) => {
 			})
 		}
 
-		const { password: pass, ...restData } = user
+		const responseUserData = {
+			id: user.id,
+			name: user.name,
+			email: user.email,
+			createdAt: user.createdAt,
+			updatedAt: user.updatedAt,
+		}
 		res.status(200).json({
 			success: true,
-			data: restData,
+			data: responseUserData,
 		})
 	} catch (err) {
 		res.status(500).json({
