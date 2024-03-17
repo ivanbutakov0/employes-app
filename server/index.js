@@ -1,7 +1,7 @@
 const express = require('express')
-const cookieParser = require('cookie-parser')
 const userRouter = require('./routes/user.route')
 const employeesRouter = require('./routes/employees.route')
+const cors = require('cors')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 3000
@@ -9,7 +9,13 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
+app.use(
+	cors({
+		origin: 'http://localhost:5173',
+		allowedHeaders: ['Content-Type'],
+		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	})
+)
 
 app.get('/', (req, res) => {
 	res.send('Hello, world!')

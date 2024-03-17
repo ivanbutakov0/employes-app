@@ -2,10 +2,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
+import { useLoginMutation } from '../../app/services/auth'
 import Button from '../../components/button'
 import Input from '../../components/input'
+import { isErrorWithMessage } from '../../utils/isErrorWithMessage'
 import styles from './index.module.css'
 
 const loginSchema = z.object({
@@ -22,6 +24,8 @@ type LoginFormData = z.infer<typeof loginSchema>
 
 const Login = () => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
+	const [loginUser, loginUserResult] = useLoginMutation()
+	const navigate = useNavigate()
 	const {
 		register,
 		handleSubmit,
@@ -31,9 +35,20 @@ const Login = () => {
 		resolver: zodResolver(loginSchema),
 	})
 
-	const onSubmit: SubmitHandler<LoginFormData> = data => {
-		// Handle form submission logic (e.g., send login request)
-		console.log('Login data:', data)
+	const onSubmit: SubmitHandler<LoginFormData> = async data => {
+		try {
+			const result = await loginUser(data).unwrap()
+			localStorage.setItem('token', result.token)
+
+			navigate('/')
+		} catch (error) {
+			console.log('error', error)
+
+			const maybeError = isErrorWithMessage(error)
+			setError('root', {
+				message: maybeError ? error.data.message : 'Что-то пошло не так',
+			})
+		}
 	}
 
 	return (
@@ -69,7 +84,7 @@ const Login = () => {
 						<p className={styles.error}>{errors.password.message}</p>
 					)}
 				</div>
-
+				<p className={styles.error}>{errors.root?.message}</p>
 				<Button disabled={isSubmitting}>
 					{isSubmitting ? 'Вход...' : 'Войти'}
 				</Button>

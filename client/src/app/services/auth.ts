@@ -1,14 +1,15 @@
 import { api } from './api'
 
 export type UserData = {
-	name: string
 	email: string
-	createdAt: string
-	updatedAt: string
+	password: string
 }
 
 type ResponseLoginData = UserData & {
+	id: string
 	token: string
+	createdAt: string
+	updatedAt: string
 }
 
 export const authApi = api.injectEndpoints({
