@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from '../features/auth/authSlice'
+import { listeningMiddleware } from '../middleware/auth'
 import { api } from './services/api'
 
 export const store = configureStore({
@@ -8,7 +9,9 @@ export const store = configureStore({
 		[api.reducerPath]: api.reducer,
 	},
 	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware().concat(api.middleware),
+		getDefaultMiddleware()
+			.concat(api.middleware)
+			.prepend(listeningMiddleware.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
