@@ -24,7 +24,7 @@ type LoginFormData = z.infer<typeof loginSchema>
 
 const Login = () => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
-	const [loginUser, loginUserResult] = useLoginMutation()
+	const [loginUser] = useLoginMutation()
 	const navigate = useNavigate()
 	const {
 		register,
@@ -37,8 +37,7 @@ const Login = () => {
 
 	const onSubmit: SubmitHandler<LoginFormData> = async data => {
 		try {
-			const result = await loginUser(data).unwrap()
-			localStorage.setItem('token', result.token)
+			await loginUser(data).unwrap()
 
 			navigate('/')
 		} catch (error) {

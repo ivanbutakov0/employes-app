@@ -5,11 +5,14 @@ export type UserData = {
 	password: string
 }
 
-type ResponseLoginData = UserData & {
-	id: string
-	token: string
-	createdAt: string
-	updatedAt: string
+type ResponseLoginData = {
+	success: boolean
+	data: UserData & {
+		id: string
+		token: string
+		createdAt: string
+		updatedAt: string
+	}
 }
 
 export const authApi = api.injectEndpoints({
@@ -40,4 +43,6 @@ export const authApi = api.injectEndpoints({
 export const { useLoginMutation, useRegisterMutation, useCurrentQuery } =
 	authApi
 
-export const { login, register, current } = authApi.endpoints
+export const {
+	endpoints: { login, register, current },
+} = authApi
