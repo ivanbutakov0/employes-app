@@ -126,39 +126,7 @@ const registerUser = async (req, res) => {
  * @access Private
  */
 const getCurrentUser = async (req, res) => {
-	try {
-		const userId = req.userId
-		const user = await prisma.user.findUnique({
-			where: {
-				id: userId,
-			},
-		})
-
-		if (!user) {
-			return res.status(404).json({
-				success: false,
-				message: 'User not found',
-			})
-		}
-
-		const responseUserData = {
-			id: user.id,
-			name: user.name,
-			email: user.email,
-			createdAt: user.createdAt,
-			updatedAt: user.updatedAt,
-		}
-		res.status(200).json({
-			success: true,
-			data: responseUserData,
-		})
-	} catch (err) {
-		res.status(500).json({
-			success: false,
-			message: 'Something went wrong',
-			error: err.message,
-		})
-	}
+	return res.status(200).json(req.user)
 }
 
 module.exports = {

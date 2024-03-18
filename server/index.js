@@ -9,13 +9,7 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(
-	cors({
-		origin: 'http://localhost:5173',
-		allowedHeaders: ['Content-Type'],
-		methods: ['GET', 'POST', 'PUT', 'DELETE'],
-	})
-)
+app.use(cors())
 
 app.get('/', (req, res) => {
 	res.send('Hello, world!')
