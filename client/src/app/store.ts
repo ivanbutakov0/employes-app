@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from '../features/auth/authSlice'
+import employeesReducer from '../features/employees/employeesSlice'
 import { listeningMiddleware } from '../middleware/auth'
 import { api } from './services/api'
 
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,
+		employees: employeesReducer,
 		[api.reducerPath]: api.reducer,
 	},
 	middleware: getDefaultMiddleware =>
