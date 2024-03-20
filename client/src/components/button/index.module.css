@@ -1,4 +1,7 @@
 .button {
+	display: flex;
+	align-items: center;
+	gap: 4px;
 	background-color: #3b82f6;
 	color: white;
 	border: none;
