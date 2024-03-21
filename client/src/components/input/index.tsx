@@ -3,9 +3,10 @@ import styles from './index.module.css'
 
 type InputProps = {
 	id?: string
-	type: 'text' | 'email' | 'password'
+	type: 'text' | 'email' | 'password' | 'number'
 	placeholder: string
 	register?: any
+	min?: number
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
@@ -16,6 +17,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 			className={styles.input}
 			type={props.type}
 			placeholder={props.placeholder}
+			min={props.min}
 			{...props.register}
 		/>
 	)

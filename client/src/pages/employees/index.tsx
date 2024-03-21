@@ -18,13 +18,13 @@ const Employees = () => {
 		}
 	}, [user, navigate])
 
+	const goToAddEmployee = () => {
+		navigate('/employees/create')
+	}
+
 	return (
 		<div className={styles.container}>
-			<Button
-				type='button'
-				onClick={() => console.log('click')}
-				disabled={isLoading}
-			>
+			<Button type='button' onClick={goToAddEmployee} disabled={isLoading}>
 				<Plus width={20} height={20} />
 				Добавить
 			</Button>

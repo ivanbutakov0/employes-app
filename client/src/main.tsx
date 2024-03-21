@@ -6,6 +6,7 @@ import { store } from './app/store.ts'
 import Layout from './components/layout/index.tsx'
 import Auth from './features/auth/auth.tsx'
 import './index.css'
+import CreateEmployee from './pages/create-employee/index.tsx'
 import Employees from './pages/employees/index.tsx'
 import Login from './pages/login/index.tsx'
 import Register from './pages/register/index.tsx'
@@ -20,16 +21,20 @@ const router = createBrowserRouter([
 				element: <Employees />,
 			},
 			{
-				path: '/employees/:id',
-				element: 'Employee',
-			},
-			{
 				path: '/login',
 				element: <Login />,
 			},
 			{
 				path: '/register',
 				element: <Register />,
+			},
+			{
+				path: '/employees/create',
+				element: <CreateEmployee />,
+			},
+			{
+				path: '/employees/:id',
+				element: 'Employee',
 			},
 		],
 	},

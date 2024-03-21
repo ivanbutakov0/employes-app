@@ -7,12 +7,12 @@ export type ErrorWithMessage = {
 }
 
 export type Employee = {
-	id: string
+	id?: string
 	firstName: string
 	lastName: string
 	age: string
 	address: string
-	userId: string
-	createdAt: string
-	updatedAt: string
+	userId?: string
+	createdAt?: string
+	updatedAt?: string
 }
