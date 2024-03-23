@@ -23,7 +23,6 @@ export const employeesApi = api.injectEndpoints({
 			query: id => ({
 				url: `/employee/${id}`,
 				method: 'GET',
-				body: id,
 			}),
 		}),
 		createEmployee: builder.mutation<ResponseSingleEmployee, Employee>({
