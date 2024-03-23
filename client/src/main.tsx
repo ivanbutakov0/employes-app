@@ -10,6 +10,7 @@ import CreateEmployee from './pages/create-employee/index.tsx'
 import Employees from './pages/employees/index.tsx'
 import Login from './pages/login/index.tsx'
 import Register from './pages/register/index.tsx'
+import Status from './pages/status/index.tsx'
 
 const router = createBrowserRouter([
 	{
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
 			{
 				path: '/employees/create',
 				element: <CreateEmployee />,
+			},
+			{
+				path: '/status/:status',
+				element: <Status />,
 			},
 			{
 				path: '/employees/:id',

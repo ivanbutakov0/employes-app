@@ -73,7 +73,7 @@ const createEmployee = async (req, res) => {
 				lastName,
 				age,
 				address,
-				userId: req.userId,
+				userId: req.user.id,
 			},
 		})
 
@@ -82,6 +82,7 @@ const createEmployee = async (req, res) => {
 			data: newEmployee,
 		})
 	} catch (err) {
+		console.log(err)
 		res.status(500).json({
 			success: false,
 			message: 'Something went wrong',
